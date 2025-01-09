@@ -2,6 +2,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
 import { supabase } from "@/src/lib/supabaseClient";
 import { Session, AuthChangeEvent } from "@supabase/supabase-js";
 
@@ -39,8 +40,18 @@ export default function ProtectedLayout({
   }
 
   return (
-    <html lang="en">
-      <body>{children}</body>
-    </html>
+    <div>
+      {/* Navigation Bar */}
+      <nav className="flex gap-4 p-4 bg-gray-100">
+        <Link href="/protected/planning">Planning</Link>
+        <Link href="/protected/project-setup">Project Setup</Link>
+        <Link href="/protected/building">Building</Link>
+        <Link href="/protected/showcase-prep">Showcase Prep</Link>
+        <Link href="/protected/demo-reflection">Demo/Reflection</Link>
+      </nav>
+      
+      {/* Main Content */}
+      <main className="p-4">{children}</main>
+    </div>
   );
 }
