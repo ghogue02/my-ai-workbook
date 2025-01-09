@@ -9,7 +9,13 @@ export default function LoginPage() {
 
   async function handleSignIn(e: React.FormEvent) {
     e.preventDefault();
-    const { error } = await supabase.auth.signInWithOtp({ email });
+    const { error } = await supabase.auth.signInWithOtp({
+      email,
+      options: {
+        emailRedirectTo: process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
+      },
+    });
+    
     if (error) {
       alert("Error sending magic link: " + error.message);
     } else {
