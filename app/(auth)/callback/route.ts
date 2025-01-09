@@ -11,6 +11,6 @@ export async function GET(request: Request) {
     await supabase.auth.exchangeCodeForSession(code)
   }
 
-  // URL to redirect to after sign in process completes
-  return NextResponse.redirect(requestUrl.origin)
+  // After authentication, redirect to the building page
+  return NextResponse.redirect(new URL('/protected/building', requestUrl.origin))
 }

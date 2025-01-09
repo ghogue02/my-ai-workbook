@@ -1,4 +1,3 @@
-// app/(auth)/login/page.tsx
 "use client";
 
 import React, { useState } from "react";
@@ -12,7 +11,8 @@ export default function LoginPage() {
     const { error } = await supabase.auth.signInWithOtp({
       email,
       options: {
-        emailRedirectTo: process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
+        // Update this line to NOT include /auth/
+        emailRedirectTo: `${window.location.origin}/callback`,
       },
     });
     
