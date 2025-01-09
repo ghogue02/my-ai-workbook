@@ -1,17 +1,20 @@
+// app/(auth)/login/page.tsx
 "use client";
 
 import React, { useState } from "react";
-import { supabase } from "@/src/lib/supabaseClient";
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
+  const supabase = createClientComponentClient()
 
   async function handleSignIn(e: React.FormEvent) {
     e.preventDefault();
     const { error } = await supabase.auth.signInWithOtp({
       email,
       options: {
-        emailRedirectTo: `${window.location.origin}`,
+        emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}`,
+        shouldCreateUser: true,
       },
     });
     
