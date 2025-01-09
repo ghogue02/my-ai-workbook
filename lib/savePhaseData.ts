@@ -1,5 +1,5 @@
 // File: lib/savePhaseData.ts
-import { supabase } from "./supabaseClient";
+import { supabase } from "@/src/lib/supabaseClient";
 
 /**
  * Upsert workbook data for a given user + phase into the "workbook_responses" table.
