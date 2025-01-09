@@ -2,7 +2,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabaseClient";
-import { Session } from "@supabase/supabase-js";
+import { Session, AuthChangeEvent } from "@supabase/supabase-js";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
@@ -12,10 +12,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       setSession(session);
     });
     const { data: authListener } = supabase.auth.onAuthStateChange(
-      (_event, session) => {
-        setSession(session);
-      }
-    );
+        (event: AuthChangeEvent, session: Session | null) => {
+          setSession(session);
+        }
+      );
     return () => {
       authListener.subscription.unsubscribe();
     };
