@@ -17,7 +17,7 @@ export async function GET(request: Request) {
       const accessToken = hash.split('access_token=')[1].split('&')[0]
       
       // Set the session using the token
-      const { data: { session }, error } = await supabase.auth.setSession({
+      const { data: { session } } = await supabase.auth.setSession({
         access_token: accessToken,
         refresh_token: hash.split('refresh_token=')[1].split('&')[0]
       })
