@@ -17,7 +17,7 @@ export default function AuthCallbackPage() {
           const accessToken = hash.split('access_token=')[1].split('&')[0]
           const refreshToken = hash.split('refresh_token=')[1].split('&')[0]
 
-          const { data, error } = await supabase.auth.setSession({
+          const { error } = await supabase.auth.setSession({
             access_token: accessToken,
             refresh_token: refreshToken
           })
