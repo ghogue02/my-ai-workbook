@@ -1,4 +1,4 @@
-// File: app/(auth)/login/page.tsx
+// app/(auth)/login/page.tsx
 "use client";
 
 import React, { useState } from "react";
@@ -28,10 +28,7 @@ export default function LoginPage() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
-        <button
-          className="bg-blue-600 text-white py-2 px-4 rounded"
-          type="submit"
-        >
+        <button className="bg-blue-600 text-white py-2 px-4 rounded" type="submit">
           Send Magic Link
         </button>
       </form>
