@@ -1,65 +1,45 @@
 // File: app/layout.tsx
 "use client";
+
 import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabaseClient";
 import { Session, AuthChangeEvent } from "@supabase/supabase-js";
 
+// This layout forces a user to be logged in before viewing children.
+// If user isn't logged in, we redirect them to /login.
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
 
   useEffect(() => {
+    // Get current session
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
     });
+
+    // Listen for session changes (login/logout)
     const { data: authListener } = supabase.auth.onAuthStateChange(
-        (event: AuthChangeEvent, session: Session | null) => {
-          setSession(session);
-        }
-      );
+      (event: AuthChangeEvent, session: Session | null) => {
+        setSession(session);
+      }
+    );
+
+    // Cleanup subscription on unmount
     return () => {
       authListener.subscription.unsubscribe();
     };
   }, []);
 
+  // If not logged in, redirect to /login (on client side)
   if (!session) {
-    // if not logged in, force to login page
     if (typeof window !== "undefined") {
       window.location.href = "/login";
     }
-    return null;
+    return null; // or a loading spinner
   }
 
   return (
     <html lang="en">
-      <body>
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
-
-export async function savePhaseData(userId: string, phase: string, data: any) {
-    // upsert so we only have one record per user/phase
-    // or choose to insert multiple times if you want version history
-    const { data: existing, error: fetchError } = await supabase
-      .from("workbook_responses")
-      .select("id")
-      .eq("user_id", userId)
-      .eq("phase", phase)
-      .single();
-  
-    if (!existing) {
-      // Insert new
-      await supabase.from("workbook_responses").insert({
-        user_id: userId,
-        phase,
-        data,
-      });
-    } else {
-      // Update existing
-      await supabase
-        .from("workbook_responses")
-        .update({ data })
-        .eq("id", existing.id);
-    }
-  }
