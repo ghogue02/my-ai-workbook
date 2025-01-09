@@ -36,9 +36,9 @@ export default function DemoReflectionPage() {
       };
       await savePhaseData(userId, "demo-reflection", formData);
       alert("Data saved successfully!");
-    } catch (err: any) {
-      alert("Error saving data: " + err.message);
-    } finally {
+    } catch (err: unknown) {
+      const errorMessage = err instanceof Error ? err.message : "Unknown error occurred";
+      alert("Error saving data: " + errorMessage);
       setLoading(false);
     }
   }
