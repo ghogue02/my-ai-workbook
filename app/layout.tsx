@@ -1,4 +1,4 @@
-// File: app/layout.tsx (optional, minimal)
+// app/layout.tsx
 export default function RootLayout({
     children,
   }: {
