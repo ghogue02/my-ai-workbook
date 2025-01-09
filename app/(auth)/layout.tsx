@@ -1,9 +1,10 @@
-// File: app/layout.tsx (optional, minimal)
-export default function RootLayout({
+// File: app/(auth)/layout.tsx
+export default function AuthLayout({
     children,
   }: {
     children: React.ReactNode;
   }) {
+    // no session check here, so the login page actually renders
     return (
       <html lang="en">
         <body>{children}</body>
