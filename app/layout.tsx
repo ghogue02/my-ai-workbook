@@ -1,12 +1,15 @@
-// app/layout.tsx
+import AuthLayout from "./(auth)/layout";
+
 export default function RootLayout({
-    children,
-  }: {
-    children: React.ReactNode;
-  }) {
-    return (
-      <html lang="en">
-        <body>{children}</body>
-      </html>
-    );
-  }
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en">
+      <body>
+        <AuthLayout>{children}</AuthLayout>
+      </body>
+    </html>
+  );
+}
